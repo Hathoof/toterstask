@@ -30,6 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   carousel_images: ^1.1.2
+  google_nav_bar: ^5.0.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,6 +39,8 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -63,6 +66,16 @@ flutter:
      - images/kbab.jpg
      - images/Burger.jpg
      - images/dd.jpg
+     - images/moto.jpg
+     - images/dec.jpg
+     - images/laistimage1.PNG
+     - images/laistimage2.PNG
+     - images/laistimage3.PNG
+     - images/kema.jpg
+     - images/krep.jpg
+     - images/shko_mako.jpg
+     - images/reimg1.png
+     - images/reimg2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
