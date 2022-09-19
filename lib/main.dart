@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toterstask/firsthomepage/firsthomepage.dart';
-import 'package:toterstask/foodprofile/foodprofile.dart';
-
+import 'package:toterstask/UI/splashScreen/splash.dart';
 import 'bottomNavigationbar.dart';
 
 void main() {
@@ -13,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  MainNav(),
+      home:  splash(),
     );
   }
 }

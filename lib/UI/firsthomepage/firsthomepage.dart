@@ -1,21 +1,126 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_images/carousel_images.dart';
-import 'package:toterstask/foodDetalis/foodDetalis.dart';
-import 'package:toterstask/foodprofile/foodprofile.dart';
-
+import 'package:http/http.dart';
+import 'package:toterstask/UI/firsthomepage/dataforhome.dart';
+import 'package:toterstask/UI/foodprofile/foodprofile.dart';
+import 'package:toterstask/bottomNavigationbar.dart';
 class firsthomepage extends StatefulWidget {
   @override
   State<firsthomepage> createState() => _firsthomepageState();
 }
 
 class _firsthomepageState extends State<firsthomepage> {
-  final List<String> listImages = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6WdY2kSnrNJu1kQrlznJNjgEpW7_R8fsm8ySzZ3jsUdl8nbdfEMxlvbVsDMVnFGe_imQ&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYXFmxQ1EzAyJq0MEA2pLV6_HouDalmWkojGjdgF5Qzjn9IXhUHidDcRthx0yZweAiIcQ&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3usqlDJuSeFUUGqZHlF2wuMh8-U0ibrwra9s0BdnhraOEFHq4eo6D25G53z-100ePkJo&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1Mk0_YC6JPIAgHcVRi7yF3rxuELDz_dFvbq8-EJj1XFwiqUxASZhg7_PiJjDM5JSpmw&usqp=CAU'
-  ];
+  Future getData() async{
+    var cat1=Uri.parse("http://localhost:4000/show");
+    var cat2=Uri.parse("http://localhost:4000/show2");
+    var rest1=Uri.parse("http://localhost:4000/show/rest");
+    var rest2=Uri.parse("http://localhost:4000/show/rest2");
 
+    Response response1= await get(cat1);
+    Response response2= await get(cat2);
+    Response response3= await get(rest1);
+    Response response4= await get(rest2);
+
+    String body1 =response1.body;
+    String body2 =response2.body;
+    String body3 =response3.body;
+    String body4 =response4.body;
+
+    optionImgLine1.clear();
+    optionNameLine1.clear();
+
+    optionImgLine2.clear();
+    optionNameLine2.clear();
+
+    mainlistImages1.clear();
+    mainlistRname1.clear();
+    maxTime1.clear();
+    minTime1.clear();
+    mainlistDes1.clear();
+    mainlistRank1.clear();
+    mainlistCommnt1.clear();
+
+    mainlistImages2.clear();
+    mainlistRname2.clear();
+    maxTime2.clear();
+    minTime2.clear();
+    mainlistDes2.clear();
+    mainlistRank2.clear();
+    mainlistCommnt2.clear();
+
+    List<dynamic> list1=json.decode(body1);
+    List<dynamic> list2=json.decode(body2);
+    List<dynamic> list3=json.decode(body3);
+    List<dynamic> list4=json.decode(body4);
+
+    for(int i=0 ; i<list1.length ; i++){
+      print(list1[i]['images']);
+      print(list1[i]['name']);
+      setState(() {
+        optionImgLine1.add(list1[i]['images']);
+        optionNameLine1.add(list1[i]['name']);
+
+      });
+    }
+    for(int i=0 ; i<list2.length ; i++){
+      print(list2[i]['images']);
+      print(list2[i]['name']);
+      setState(() {
+        optionImgLine2.add(list2[i]['images']);
+        optionNameLine2.add(list2[i]['name']);
+
+      });
+    }
+    for(int i=0 ; i<list3.length ; i++){
+      print(list3[i]['images']);
+      print(list3[i]['rest_name']);
+      print(list3[i]['maxTime']);
+      print(list3[i]['minTime']);
+      print(list3[i]['descreption']);
+      print(list3[i]['rank']);
+      print(list3[i]['comment']);
+      print("---------------------");
+      setState(() {
+        mainlistImages1.add(list3[i]['images']);
+        mainlistRname1.add(list3[i]['rest_name']);
+        maxTime1.add(list3[i]['maxTime']);
+        minTime1.add(list3[i]['minTime']);
+        mainlistDes1.add(list3[i]['descreption']);
+        mainlistRank1.add(list3[i]['rank']);
+        mainlistCommnt1.add(list3[i]['comment']);
+      });
+    }
+    for(int i=0 ; i<list4.length ; i++){
+      print(list4[i]['images']);
+      print(list4[i]['rest_name']);
+      print(list4[i]['maxTime']);
+      print(list4[i]['minTime']);
+      print(list4[i]['descreption']);
+      print(list4[i]['rank']);
+      print(list4[i]['comment']);
+      print("---------------------");
+      setState(() {
+        mainlistImages2.add(list4[i]['images']);
+        mainlistRname2.add(list4[i]['rest_name']);
+        maxTime2.add(list4[i]['maxTime']);
+        minTime2.add(list4[i]['minTime']);
+        mainlistDes2.add(list4[i]['descreption']);
+        mainlistRank2.add(list4[i]['rank']);
+        mainlistCommnt2.add(list4[i]['comment']);
+
+
+      });
+    }
+
+  }
+
+  void initState(){
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +189,8 @@ class _firsthomepageState extends State<firsthomepage> {
             ),
           ),
           Expanded(
-            child: Container(child: ListView.builder(
+            child: Container(
+                child: ListView.builder(
               itemCount: 1,
                 itemBuilder: (BuildContext context, int index) {
               return Column(
@@ -100,29 +206,38 @@ class _firsthomepageState extends State<firsthomepage> {
                   ),
                   Column(
                     children: [
-                      Row(
-                        children: [
-                          option(
-                              "https://cdn-icons-png.flaticon.com/512/198/198416.png",
-                              "المطاعم"),
-                          option(
-                              "https://cdn.iconscout.com/icon/premium/png-256-thumb/vegetable-1401365-1187883.png",
-                              "توترز فريش"),
-                        ],
+                     Center(
+                       child: Container(
+                         height: 120,
+                         width: MediaQuery.of(context).size.width-50,
+                         child: ListView.builder(
+                           scrollDirection: Axis.horizontal,
+                             itemCount: optionNameLine1.length,
+                             itemBuilder:  (BuildContext context, int index){
+                               return option(
+                                   optionImgLine1[index],
+                                   optionNameLine1[index],
+                               );
+                             }
+                         ),
+                       ),
+                     ),
+                      Center(
+                        child: Container(
+                          height: 120,
+                          width: MediaQuery.of(context).size.width-50,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: optionNameLine2.length,
+                              itemBuilder:  (BuildContext context, int index){
+                                return option(
+                                  optionImgLine2[index],
+                                  optionNameLine2[index],
+                                );
+                              }
+                          ),
+                        ),
                       ),
-                      Row(
-                        children: [
-                          option(
-                              "https://icon-library.com/images/money-icon-png/money-icon-png-26.jpg",
-                              "اضف رصيد"),
-                          option(
-                              "https://i.pinimg.com/originals/5d/d9/f7/5dd9f7c0a69e78617d46d5311d022876.png",
-                              "المندوب"),
-                          option(
-                              "https://www.iconpacks.net/icons/2/free-shopping-bags-icon-2039-thumb.png",
-                              "متاجر"),
-                        ],
-                      )
                     ],
                   ),
                   SizedBox(
@@ -177,43 +292,17 @@ class _firsthomepageState extends State<firsthomepage> {
                         height: 300,
                         width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
-                          itemCount: 1,
-                          reverse: false,
+                          itemCount: mainlistRname1.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext context, int index){
-                            return  Row(
-                              children: [
-                                mainlist(
-                                    "images/kbab.jpg",
-                                    48, //minemum number of time delever
-                                    30, //maxemum number of time delever
-                                    "min", //hours or minutes
-                                    "كباب حجي حسين", //restaurant name
-                                    ".استمتع بأشهى المشاوي العراقيه و الاطباق الشرقيه", //food type
-                                    4.9, //restaurant rank
-                                    "والله الاكل كلش طيب و التوصيل سريع,"
-                                        "عاشت ايدك حذيفه على هل برنامج"),
-                                mainlist(
-                                    "images/Burger.jpg",
-                                    51, //minemum number of time delever
-                                    41, //maxemum number of time delever
-                                    "min", //hours or minutes
-                                    "فاير فلاي", //restaurant name
-                                    "فاير فلاي متخصص في تقديم البركراللذيذ", //food type
-                                    4.5, //restaurant rank
-                                    "والله الاكل كلش طيب و التوصيل سريع,"
-                                        "عاشت ايدك حذيفه على هل برنامج"),
-                                mainlist(
-                                    "images/dd.jpg",
-                                    31, //minemum number of time delever
-                                    21, //maxemum number of time delever
-                                    "min", //hours or minutes
-                                    "حلويات ابو عفيف", //restaurant name
-                                    "منذ 1974 نقدم افخر الحلويات الشرقيه المصنوعه يدويا", //food type
-                                    4.8, //restaurant rank
-                                    "والله الاكل كلش طيب و التوصيل سريع,"
-                                        "عاشت ايدك حذيفه على هل برنامج"),
-                              ],
+                            return  mainlist(
+                                mainlistImages1[index],
+                                maxTime1[index],
+                                minTime1[index],
+                                mainlistRname1[index],
+                                mainlistDes1[index],
+                                mainlistRank1[index],
+                                mainlistCommnt1[index]
                             );
                   }
                         ),
@@ -248,42 +337,18 @@ class _firsthomepageState extends State<firsthomepage> {
                         height: 300,
                         width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
-                          itemCount: 1,
+                          reverse: false,
+                          itemCount: 3,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext context, int index){
-                            return  Row(
-                              children: [
-                                mainlist(
-                                    "images/kema.jpg",
-                                    48, //minemum number of time delever
-                                    30, //maxemum number of time delever
-                                    "min", //hours or minutes
-                                    "خوش قيمه", //restaurant name
-                                    ".استمتع بالرز و القيمه التقليديه الخاصه بنا", //food type
-                                    4.9, //restaurant rank
-                                    "والله الاكل كلش طيب و التوصيل سريع,"
-                                        "عاشت ايدك حذيفه على هل برنامج"),
-                                mainlist(
-                                    "images/shko_mako.jpg",
-                                    51, //minemum number of time delever
-                                    41, //maxemum number of time delever
-                                    "min", //hours or minutes
-                                    "شكو ماكو - حي الجامعه", //restaurant name
-                                    "وكاله كويتيه متخصصه في تقديم اشهى\n انواع العصائرو المشروبات", //food type
-                                    4.5, //restaurant rank
-                                    "والله الاكل كلش طيب و التوصيل سريع,"
-                                        "عاشت ايدك حذيفه على هل برنامج"),
-                                mainlist(
-                                    "images/krep.jpg",
-                                    31, //minemum number of time delever
-                                    21, //maxemum number of time delever
-                                    "min", //hours or minutes
-                                    "بي بي سويت", //restaurant name
-                                    "متخصصون في تحضير اشهى انواع الكيك \nو الوافل و الكريب", //food type
-                                    4.8, //restaurant rank
-                                    "والله الاكل كلش طيب و التوصيل سريع,"
-                                        "عاشت ايدك حذيفه على هل برنامج"),
-                              ],
+                            return  mainlist(
+                                mainlistImages2[index],
+                                maxTime2[index],
+                                minTime2[index],
+                                mainlistRname2[index],
+                                mainlistDes2[index],
+                                mainlistRank2[index],
+                                mainlistCommnt2[index]
                             );
                   }
 
@@ -300,8 +365,8 @@ class _firsthomepageState extends State<firsthomepage> {
     );
   }
 
-  Column mainlist(String foodpic, int maxtime, int mintime, String time,
-      String restname, String description, double rank, String comment) {
+  Column mainlist(String foodpic, String maxtime, String mintime,
+      String restname, String description, String rank, String comment) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -361,7 +426,7 @@ class _firsthomepageState extends State<firsthomepage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 22.0, left: 18),
                             child: Text(
-                              time,
+                              "min",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12,
@@ -384,7 +449,6 @@ class _firsthomepageState extends State<firsthomepage> {
                       description: description,
                       maxtime: maxtime,
                       mintime: mintime,
-                      time: time,
                       restaurantname: restname,
                       rank: rank,
                     )));
@@ -518,12 +582,12 @@ class _firsthomepageState extends State<firsthomepage> {
     );
   }
 
-  Expanded option(String url, String contname) {
-    return Expanded(
-        child: Container(
+  Container option(String url, String contname) {
+    return  Container(
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
       height: 100,
+      width: 110,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -547,7 +611,7 @@ class _firsthomepageState extends State<firsthomepage> {
           )
         ],
       ),
-    ));
+    );
   }
 
   Material scroll() {

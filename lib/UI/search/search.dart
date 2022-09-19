@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:toterstask/UI/search/dataForSearch.dart';
 
 class search extends StatefulWidget {
   const search({Key? key}) : super(key: key);
@@ -8,6 +12,41 @@ class search extends StatefulWidget {
 }
 
 class _searchState extends State<search> {
+  Future getData() async{
+    var cat1=Uri.parse("http://localhost:4000/show/offer");
+
+    Response response1= await get(cat1);
+
+
+    String body1 =response1.body;
+
+    ofersimages.clear();
+    ofername.clear();
+    oferdescrption.clear();
+    ofernumber.clear();
+
+    List<dynamic> list1=json.decode(body1);
+
+    for(int i=0 ; i<list1.length ; i++){
+      print(list1[i]['images']);
+      print(list1[i]['name']);
+      print(list1[i]['Descrption']);
+      print(list1[i]['number']);
+      setState(() {
+        ofersimages.add(list1[i]['images']);
+        ofername.add(list1[i]['name']);
+        oferdescrption.add(list1[i]['Descrption']);
+        ofernumber.add(list1[i]['number']);
+
+      });
+    }
+  }
+
+  void initState(){
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,22 +106,20 @@ class _searchState extends State<search> {
                     ],
                   ),
                 ),
-                list("images/dec.jpg",
-                    "Happy Hour",
-                    "new on Toters! If it fits \nwe can dilver it.!",
-                    24),
-                list("images/laistimage1.PNG",
-                    "Weekly discounts",
-                    "new on Toters! If it fits \nwe can dilver it.!",
-                    24),
-                list("images/laistimage2.PNG",
-                    "Cashback",
-                    "new on Toters! If it fits \nwe can dilver it.!",
-                    24),
-                list("images/laistimage3.PNG",
-                    "Get Free Maels",
-                    "new on Toters! If it fits \nwe can dilver it.!",
-                    24)
+
+                Container(
+                  height: 480,
+                  child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (BuildContext context, int index){
+                        return list(
+                            ofersimages[index],
+                            ofername[index],
+                            oferdescrption[index],
+                            ofernumber[index]);
+                      }
+                  ),
+                ),
 
               ],
             );
@@ -94,7 +131,7 @@ class _searchState extends State<search> {
       String images,
       String name,
       String Descr,
-      int num,
+      String num,
       ){
     return Card(
       elevation: 0,

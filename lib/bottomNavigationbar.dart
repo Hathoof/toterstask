@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:toterstask/Orders/orders.dart';
-import 'package:toterstask/account%20profile/profile.dart';
-import 'package:toterstask/envoy/envoy.dart';
-import 'package:toterstask/firsthomepage/firsthomepage.dart';
-import 'package:toterstask/firsthomepage/firsthomepage.dart';
-import 'package:toterstask/foodDetalis/foodDetalis.dart';
-import 'package:toterstask/foodprofile/foodprofile.dart';
-import 'package:toterstask/search/search.dart';
+import 'package:toterstask/UI/Orders/orders.dart';
+import 'package:toterstask/UI/account%20profile/profile.dart';
+import 'package:toterstask/UI/envoy/envoy.dart';
+import 'package:toterstask/UI/firsthomepage/firsthomepage.dart';
+import 'package:toterstask/UI/logein%20page/login.dart';
+import 'package:toterstask/UI/search/search.dart';
+
 
 
 class MainNav extends StatefulWidget {
@@ -23,7 +22,7 @@ class _MainNavState extends State<MainNav> {
     search(),
     envoy(),
     orders(),
-    profile()
+    login()
   ];
 
   @override

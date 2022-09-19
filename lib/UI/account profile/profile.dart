@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toterstask/UI/logein%20page/accountData.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _profileState extends State<profile> {
               top: 20,
             ),
             child: Text(
-              "حذيفه حارث اسماعيل",
+              "${newName}",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:toterstask/firsthomepage/firsthomepage.dart';
-import 'package:toterstask/foodDetalis/foodDetalis.dart';
+import 'package:toterstask/UI/firsthomepage/firsthomepage.dart';
+import 'package:toterstask/UI/foodDetalis/foodDetalis.dart';
+
 
 class foodprofile extends StatefulWidget {
   final String url;
-  final int maxtime;
-  final int mintime;
+  final String maxtime;
+  final String mintime;
   final String restaurantname;
   final String description;
-  final double rank;
-  final String time;
+  final String rank;
   foodprofile({
     required this.url,
     required this.maxtime,
@@ -17,7 +17,6 @@ class foodprofile extends StatefulWidget {
     required this.restaurantname,
     required this.description,
     required this.rank,
-    required this.time,
 });
 
   @override
@@ -81,7 +80,7 @@ class _foodprofileState extends State<foodprofile> {
                             Padding(
                               padding: const EdgeInsets.only(top: 22.0, left: 12),
                               child: Text(
-                                "${widget.time}",
+                                "min",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12,

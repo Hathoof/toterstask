@@ -1,5 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:toterstask/foodprofile/foodprofile.dart';
+import 'package:http/http.dart';
 
 class foodDetals extends StatefulWidget {
   @override
@@ -7,6 +9,28 @@ class foodDetals extends StatefulWidget {
 }
 
 class _foodDetalsState extends State<foodDetals> {
+
+  Future Add_data() async {
+    var url = Uri.parse("http://localhost:4000/add/signin");
+    Map<String, String> headers = {"Content-type": "application/json"};
+
+    String json = '{"Full_name": "",'
+        ' "phone_number": "",'
+        ' "Location": ""}';
+    // make POST request
+    Response response = await post(url, headers: headers, body: json);
+    // check the status code for the result
+    int statusCode = response.statusCode;
+    // this API passes back the id of the new item added to the body
+    String body1 = response.body;
+    var data = jsonDecode(body1);
+    print(data);
+    var res = data["code"];
+
+    if (res == null) {}
+  }
+
+
   String choose = '';
   bool Check1 = false;
   bool Check2 = false;
@@ -278,47 +302,61 @@ class _foodDetalsState extends State<foodDetals> {
                         color: Colors.black45,
                       ),
                       Center(
-                        child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 20),
-                          height: 60,
-                          width: MediaQuery.of(context).size.width-20,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.green
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text("$price . د . ع ",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'baloo',
-                                    color: Colors.white),),
-                              Text("اضف الى العربه",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'baloo',
-                                    color: Colors.white),),
-                              (x<=2)?
-                              Text("$a",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'baloo',
-                                    color: Colors.white),)
-                                  : Text("$a $y",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'baloo',
-                                    color: Colors.white),),
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
 
-                            ],
-                          ),
+                            ),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary:
+                                Colors.green,
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(10.0),
+                                ),),
+                              onPressed: () {
+                                setState(() {
 
-                        ),
+                                });
+
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text("$price . د . ع ",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'baloo',
+                                        color: Colors.white),),
+                                  Text("اضف الى العربه",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'baloo',
+                                        color: Colors.white),),
+                                  (x<=2)?
+                                  Text("$a",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'baloo',
+                                        color: Colors.white),)
+                                      : Text("$a $y",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'baloo',
+                                        color: Colors.white),),
+
+                                ],
+                              ),
+                            ),
+                            height: 60,
+                            width: MediaQuery.of(context).size.width-20,) ,),
                       ),
                     ]),
 
